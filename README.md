@@ -17,5 +17,5 @@
 
 8.2小节：[account-aggregator](https://github.com/fangvivi/maven-in-action/tree/master/cap8.2 "account-aggregator")
 
-8.4小节：[account-parent](https://github.com/fangvivi/maven-in-action/tree/master/cap8.3 "account-parent")
+8.4小节：[account-parent](https://github.com/fangvivi/maven-in-action/tree/master/cap8.4 "account-parent")
 
