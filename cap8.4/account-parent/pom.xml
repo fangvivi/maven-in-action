@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wayne.mvnbook.account</groupId>
+    <artifactId>account-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>Account Parent</name>
+    <modules>
+        <!--这个是当前pom文件的相对位置，如果模块的位置和父目录平级，应该改成"../account-email"-->
+        <module>account-email</module>
+        <module>account-persist</module>
+        <module>account-captcha</module>
+        <module>account-service</module>
+        <module>account-web</module>
+    </modules>
+
+    <properties>
+        <!-- 把spring框架的版本提取出来，方便升级spring的版本-->
+        <springframework.version>2.5.6</springframework.version>
+        <junit.version>4.7</junit.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <!-- 不指定这个选项，编译的时候会出现警告
+        File encoding has not been set, using platform encoding GBK, i.e. build is platform dependent!-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <plugin>
+                    <!--使用UTF-8编码处理资源-->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <configuration>
+                        <encoding>UTF-8</encoding>
+                    </configuration>
+                </plugin>
+
+                <!-- 自定义绑定，把source插件自定义绑定到生命周期的verify阶段，
+           此阶段执行是运行source插件的jar-no-fork目标  -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <!--核心插件有默认的版本-->
+                    <!--不指定会有警告
+                    'build.plugins.plugin.version' for org.apache.maven.plugins:maven-compiler-plugin is missing.
+                    -->
+                    <version>3.8.0</version>
+                    <!-- 插件的全局配置，所有使用此插件目标的任务都会使用这个配置 -->
+                    <configuration>
+                        <!-- 编译1.8版本的源文件-->
+                        <source>1.8</source>
+                        <!-- 生成与JVM1.8兼容的字节码-->
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+
+                <!-- 把antrun绑定到validate、verify两个生命周期阶段，执行这个插件的run目标 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>3.0.0</version>
+                    <executions>
+                        <!--某些插件还对不同的生命周期阶段进行不同的任务配置-->
+                        <execution>
+                            <id>ant-validate</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <!--书中用的是tasks，这个标签在高版本已经被移除，使用target代替-->
+                                <target>
+                                    <echo>I'm bound to Validate phase.</echo>
+                                </target>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>ant-verify</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                            <configuration>
+                                <target>
+                                    <echo>I'm bound to verify phase.</echo>
+                                </target>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <!--生成测试代码的构件-->
+                                <goal>test-jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>
