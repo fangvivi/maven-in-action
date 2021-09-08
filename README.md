@@ -10,12 +10,12 @@
 
 所有模块代码都可以直接运行
 # 第五章
-5.3小节：[account-email](https://github.com/fangvivi/maven-in-action.git "account-email")
+5.3小节：[account-email](https://github.com/fangvivi/maven-in-action/tree/master/cap5.3 "account-email")
 
 # 第八章
-8.1小节：[account-persist](https://github.com/fangvivi/maven-in-action.git "account-persist")
+8.1小节：[account-persist](https://github.com/fangvivi/maven-in-action/tree/master/cap8.1 "account-persist")
 
-8.2小节：[account-aggregator](https://github.com/fangvivi/maven-in-action.git "account-aggregator")
+8.2小节：[account-aggregator](https://github.com/fangvivi/maven-in-action/tree/master/cap8.2 "account-aggregator")
 
-8.4小节：[account-parent](https://github.com/fangvivi/maven-in-action.git "account-parent")
+8.4小节：[account-parent](https://github.com/fangvivi/maven-in-action/tree/master/cap8.3 "account-parent")
 
